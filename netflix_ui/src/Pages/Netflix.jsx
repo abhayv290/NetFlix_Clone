@@ -7,15 +7,36 @@ import styled from 'styled-components';
 import backimage from '../assets/home.jpg';
 import movielogo from '../assets/homeTitle.webp';
 import {useNavigate} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {useEffect} from 'react';
+import {getGenres, getMovies} from '../store';
+import {all} from 'axios';
 
 export default function Netflix() {
   const [isscroll, setisscroll] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
+  const movies = useSelector((state) => state.netflix.movies);
+  useEffect(() => {
+
+    dispatch(getGenres());
+  }, [])
+
+  useEffect(() => {
+    if (genresLoaded) dispatch(getMovies({type: "all"}))
+
+  })
+
+
+
+
 
   window.onscroll = () => {
     setisscroll(scrollY === 0 ? false : true);
     return () => (window.onscroll = null);
   };
+
 
   return (
     <Container>

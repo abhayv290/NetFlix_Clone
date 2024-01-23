@@ -7,7 +7,7 @@ import {firebaseAuth} from '../utils/firebase_config';
 import {onAuthStateChanged, signOut} from 'firebase/auth';
 import {useNavigate} from 'react-router-dom';
 export default function Navbar({isscroll}) {
-    console.log(isscroll);
+    // console.log(isscroll);
     const [showSearch, setshowSearch] = useState(false);
     const [inputhover, setinputhover] = useState(false);
     const navigate = useNavigate();
