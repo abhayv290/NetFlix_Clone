@@ -19,7 +19,7 @@ export const getGenres = createAsyncThunk('netflix/genres', async () => {
     }
 });
 const createArrayfromRawData = (array, movieAray, genres) => {
-
+    // console.log(array);
     array.forEach((element) => {
         const movieGenre = [];
         element.genre_ids.forEach((genre) => {
@@ -38,23 +38,24 @@ const createArrayfromRawData = (array, movieAray, genres) => {
 }
 const getRawData = async (api, genres, paging) => {
     const movieArray = [];
-    for (let i = 1; movieArray.length < 60 && i < 10; i++) {
+    for (let i = 1; movieArray.length < 100 && i < 10; i++) {
         try {
             const {data: {results}} = await axios.get(`${api}${paging ? `&page=${i}` : ""}`);
+            // console.log(results);
             createArrayfromRawData(results, movieArray, genres);
-            return movieArray;
         } catch (error) {
             // Handle error
             console.error('Error fetching raw data:', error.message || error);
             throw error;
         }
     }
+    return movieArray;
 };
 export const getMovies = createAsyncThunk('netflix/trending/movies', async ({type}, thunkApi) => {
     try {
         const {netflix: {genres}, } = thunkApi.getState();
-        const data = await getRawData(`${TMDB_BASE_URL}/trending/${type}/week?api_key=${API_KEY}`, genres, true);
-        console.log(data);
+        return await getRawData(`${TMDB_BASE_URL}/trending/${type}/day?api_key=${API_KEY}`, genres, true);
+
     } catch (error) {
         // Handle error
         console.error('Error fetching movies:', error.message || error);

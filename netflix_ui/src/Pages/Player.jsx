@@ -30,8 +30,9 @@ const Container = styled.div`
           
             cursor:pointer;
             &:hover{
-                color: aliceblue;
-               font-size: 2.5rem;
+                color: #a5d4fd;
+                scale:1.4;
+                
             }
         }
     }

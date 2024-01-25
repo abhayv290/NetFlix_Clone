@@ -1,13 +1,13 @@
 import React, {useState} from 'react'
 import logo from '../assets/logo.png'
 import styled from 'styled-components'
-import {Link} from 'react-router-dom';
+import {Link, useLocation} from 'react-router-dom';
 import {FaSearch, FaPowerOff} from "react-icons/fa";
 import {firebaseAuth} from '../utils/firebase_config';
 import {onAuthStateChanged, signOut} from 'firebase/auth';
 import {useNavigate} from 'react-router-dom';
 export default function Navbar({isscroll}) {
-    // console.log(isscroll);
+    const location = useLocation();
     const [showSearch, setshowSearch] = useState(false);
     const [inputhover, setinputhover] = useState(false);
     const navigate = useNavigate();
@@ -30,7 +30,7 @@ export default function Navbar({isscroll}) {
                     </div>
                     <ul className='links flex'>
                         {links.map(({name, link}) => (
-                            <li key={name}><Link to={link} >{name}</Link></li>
+                            <li key={name}><Link className={`${location == link ? 'color_red' : ""}`} to={link} >{name}</Link></li>
                         ))}
 
                     </ul>
@@ -90,6 +90,12 @@ nav{
                         color:red;
                         font-weight: 900;
                     }
+                    &:focus{
+                        color:red;
+                    }
+                }
+                .color_red{
+                    color:darkred;
                 }
             }
         }

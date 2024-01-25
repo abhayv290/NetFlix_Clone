@@ -10,7 +10,8 @@ import {useNavigate} from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
 import {useEffect} from 'react';
 import {getGenres, getMovies} from '../store';
-import {all} from 'axios';
+import Slider from '../Components/Slider';
+
 
 export default function Netflix() {
   const [isscroll, setisscroll] = useState(false);
@@ -19,14 +20,14 @@ export default function Netflix() {
   const genresLoaded = useSelector((state) => state.netflix.genresLoaded);
   const movies = useSelector((state) => state.netflix.movies);
   useEffect(() => {
-
     dispatch(getGenres());
   }, [])
 
+
   useEffect(() => {
     if (genresLoaded) dispatch(getMovies({type: "all"}))
-
   })
+
 
 
 
@@ -60,6 +61,7 @@ export default function Netflix() {
           </div>
         </div>
       </div>
+      <Slider movies={movies} />
     </Container>
   );
 }
